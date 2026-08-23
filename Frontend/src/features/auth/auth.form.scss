@@ -1,0 +1,32 @@
+@use "./style/button.scss";
+
+main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .form-container {
+    min-width: 350px;
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0;
+
+    input {
+      border: none;
+      outline: none;
+      padding-inline: 1rem;
+      padding-block: 0.5rem;
+      border-radius: 0.5rem;
+    }
+  }
+
+  a {
+    color: #3b82f6;
+    text-decoration: none;
+  }
+}
