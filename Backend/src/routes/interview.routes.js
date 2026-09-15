@@ -14,7 +14,7 @@ interviewRouter.post(
   "/",
   authMiddleware.authUser,
   upload.single("resume"),
-  interviewController.generateInterViewReportController,
+  interviewController.generateInterviewReportController,
 );
 
 /**
