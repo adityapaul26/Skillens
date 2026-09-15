@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // ── Variables ────────────────────────────────────────────────────────────────
 $bg-page: #0d1117;
 $bg-card: #161b22;
@@ -309,7 +311,7 @@ $font-stack:
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, $accent 0%, darken($accent, 10%) 100%);
+  background: linear-gradient(135deg, $accent 0%, color.adjust($accent, $lightness: -10%) 100%);
   color: #fff;
   font-size: 0.9rem;
   font-weight: 600;
