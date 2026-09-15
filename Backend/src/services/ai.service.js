@@ -1,5 +1,6 @@
 const { GoogleGenAI } = require("@google/genai");
 const { z } = require("zod");
+const puppeteer = require("puppeteer");
 
 const ai = new GoogleGenAI({
   apiKey: process.env.GOOGLE_GENAI_API_KEY,
@@ -187,4 +188,78 @@ Generate the response according to the provided schema.
   console.log(interviewReport);
 }
 
-module.exports = { generateInterviewReport };
+async function generatePdfFromHtml(htmlContent) {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.setContent(htmlContent, { waitUntil: "networkidle0" });
+
+  const pdfBuffer = await page.pdf({
+    format: "A4",
+    margin: {
+      top: "20mm",
+      bottom: "20mm",
+      left: "15mm",
+      right: "15mm",
+    },
+  });
+
+  await browser.close();
+
+  return pdfBuffer;
+}
+
+async function generateResumePdf({ resume, selfDescription, jobDescription }) {
+  const resumePdfJsonSchema = {
+    type: "object",
+    properties: {
+      html: {
+        type: "string",
+        description:
+          "The HTML content of the resume which can be converted to PDF using a library like Puppeteer.",
+      },
+    },
+    required: ["html"],
+  };
+
+  const prompt = `Generate a resume for a candidate with the following details:
+
+Resume:
+${resume}
+
+Self Description:
+${selfDescription}
+
+Job Description:
+${jobDescription}
+
+Generate a JSON object with a single field "html" containing the complete HTML content of the resume.
+
+Requirements:
+- Tailor the resume specifically to the given job description.
+- Highlight the candidate's strengths, relevant skills, projects, and experience.
+- Make the content sound natural and human-written, not AI-generated.
+- Use a simple, professional, and visually appealing design.
+- The resume must be ATS-friendly and easy for applicant tracking systems to parse.
+- You may use subtle colors and different font styles for emphasis.
+- Keep the resume concise and ideally 1–2 pages when converted to PDF.
+- Prioritize relevant and impactful information over unnecessary content.
+- The HTML should be self-contained and ready to be converted directly into a PDF using Puppeteer.`;
+
+  const interaction = await ai.interactions.create({
+    model: "gemini-3.8-flash",
+    input: prompt,
+    response_format: {
+      type: "text",
+      mime_type: "application/json",
+      schema: resumePdfJsonSchema,
+    },
+  });
+
+  const jsonContent = JSON.parse(interaction.output_text);
+
+  const pdfBuffer = await generatePdfFromHtml(jsonContent.html);
+
+  return pdfBuffer;
+}
+
+module.exports = { generateInterviewReport, generateResumePdf };
