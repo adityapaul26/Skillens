@@ -120,7 +120,7 @@ async function getMeController(req, res) {
   const user = await userModel.findById(req.user.id);
 
   return res.status(200).json({
-    message: "User deatils fetched successfully",
+    message: "User details fetched successfully",
     user: {
       id: user._id,
       username: user.username,

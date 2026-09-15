@@ -185,11 +185,13 @@ Generate the response according to the provided schema.
   const interviewReport = interviewSchema.parse(
     JSON.parse(interaction.output_text),
   );
-  console.log(interviewReport);
+  return interviewReport;
 }
 
 async function generatePdfFromHtml(htmlContent) {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"],
+  });
   const page = await browser.newPage();
   await page.setContent(htmlContent, { waitUntil: "networkidle0" });
 
