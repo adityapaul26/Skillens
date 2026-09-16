@@ -1,384 +1,552 @@
 @use "sass:color";
+@use "../../../styles/variables" as *;
 
-// ── Variables ────────────────────────────────────────────────────────────────
-$bg-page: #0d1117;
-$bg-card: #161b22;
-$bg-panel: #1c2230;
-$bg-input: #1e2535;
-$border-color: #2a3348;
-$text-primary: #e6edf3;
-$text-muted: #7d8590;
-$accent: #ff2d78;
-$accent-alt: #ff6b9d;
-$badge-required: #ff2d78;
-$badge-best: #ff2d78;
-$info-bg: #1b2a4a;
-$info-border: #2d4a7a;
-$font-stack:
-  system-ui,
-  -apple-system,
-  BlinkMacSystemFont,
-  "Segoe UI",
-  Roboto,
-  sans-serif;
-
-// ── Page Shell ───────────────────────────────────────────────────────────────
 .home-page {
-  width: 100%;
   min-height: 100vh;
-  background-color: $bg-page;
-  color: $text-primary;
-  font-family: $font-stack;
+  width: 100%;
+  background-color: $bg-canvas;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 100% 100%, rgba(139, 92, 246, 0.05) 0%, transparent 40%);
+  display: flex;
+  flex-direction: column;
 
+  &__main {
+    flex: 1;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+}
+
+// ── Hero Section ──────────────────────────────────────────────────────────────
+.home-hero {
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 3rem 1.5rem;
-  gap: 2rem;
-}
+  gap: 1rem;
+  max-width: 780px;
+  margin: 0 auto;
 
-// ── Page Header ──────────────────────────────────────────────────────────────
-.page-header {
-  text-align: center;
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.85rem;
+    background: rgba(99, 102, 241, 0.12);
+    border: 1px solid rgba(99, 102, 241, 0.28);
+    border-radius: $radius-full;
+    color: color.adjust($accent-primary, $lightness: 15%);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
 
   h1 {
-    font-size: 2.25rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.2;
     color: $text-primary;
+
+    .highlight {
+      background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
   }
 
   p {
-    color: $text-muted;
-    font-size: 0.95rem;
-    max-width: 480px;
-    margin: 0 auto;
+    font-size: 1.05rem;
+    color: $text-secondary;
     line-height: 1.6;
-  }
-
-  .highlight {
-    color: $accent;
+    max-width: 620px;
   }
 }
 
-// ── Main Card ─────────────────────────────────────────────────────────────────
-.interview-card {
+// ── Studio Creator Card ───────────────────────────────────────────────────────
+.studio-card {
   width: 100%;
-  max-width: 900px;
   background-color: $bg-card;
-  border: 1px solid $border-color;
-  border-radius: 1rem;
+  border: 1px solid $border-medium;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-lg, 0 0 40px rgba(0, 0, 0, 0.4);
   overflow: hidden;
 
   &__body {
     display: flex;
-    min-height: 520px;
+    min-height: 540px;
   }
 
-  &__footer {
+  &__panel {
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+
+    &--left {
+      background: $bg-card;
+    }
+
+    &--right {
+      background: $bg-card-subtle;
+      border-left: 1px solid $border-subtle;
+    }
+  }
+
+  &__panel-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 1.5rem;
-    border-top: 1px solid $border-color;
+    gap: 0.75rem;
 
-    .footer-info {
+    .header-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+
+      .header-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: $radius-sm;
+        background: rgba(99, 102, 241, 0.15);
+        color: color.adjust($accent-primary, $lightness: 15%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      h2 {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: $text-primary;
+      }
+    }
+  }
+
+  &__textarea-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-height: 280px;
+
+    textarea {
+      flex: 1;
+      width: 100%;
+      background-color: $bg-input;
+      border: 1px solid $border-subtle;
+      border-radius: $radius-md;
+      padding: 1rem 1.15rem;
+      color: $text-primary;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      resize: none;
+      outline: none;
+      transition: all 0.2s ease;
+
+      &::placeholder {
+        color: $text-muted;
+      }
+
+      &:focus {
+        background-color: $bg-input-focus;
+        border-color: $accent-primary;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+      }
+    }
+  }
+
+  &__counter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: $text-muted;
+
+    .counter-progress {
+      width: 100px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: $radius-full;
+      overflow: hidden;
+
+      .counter-fill {
+        height: 100%;
+        background: $accent-primary;
+        border-radius: $radius-full;
+        transition: width 0.2s ease;
+      }
+    }
+  }
+
+  // File Dropzone & File Card
+  &__dropzone {
+    border: 2px dashed rgba(99, 102, 241, 0.35);
+    background-color: rgba(14, 22, 38, 0.6);
+    border-radius: $radius-lg;
+    padding: 1.75rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease;
+
+    &:hover, &--dragover {
+      border-color: $accent-primary;
+      background-color: rgba(99, 102, 241, 0.06);
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
+    }
+
+    .dropzone-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(99, 102, 241, 0.15);
+      color: color.adjust($accent-primary, $lightness: 15%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.25rem;
+    }
+
+    .dropzone-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: $text-primary;
+    }
+
+    .dropzone-subtitle {
       font-size: 0.8rem;
       color: $text-muted;
     }
   }
-}
 
-// ── Panels ────────────────────────────────────────────────────────────────────
-.panel-divider {
-  width: 1px;
-  background-color: $border-color;
-  flex-shrink: 0;
-}
-
-.panel {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1.5rem;
-
-  &__header {
+  &__file-preview {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.25rem;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: $radius-lg;
 
-    h2 {
-      font-size: 1rem;
-      font-weight: 600;
-      color: $text-primary;
-      flex: 1;
-    }
-  }
-
-  &__icon {
-    display: flex;
-    align-items: center;
-    color: $accent;
-  }
-
-  &__textarea {
-    flex: 1;
-    width: 100%;
-    background-color: $bg-input;
-    border: 1px solid $border-color;
-    border-radius: 0.5rem;
-    padding: 0.75rem 1rem;
-    color: $text-primary;
-    font-family: $font-stack;
-    font-size: 0.875rem;
-    resize: none;
-    outline: none;
-    transition: border-color 0.2s;
-    line-height: 1.5;
-
-    &::placeholder {
-      color: $text-muted;
-    }
-
-    &:focus {
-      border-color: $accent;
-    }
-
-    &--short {
-      flex: unset;
-      height: 96px;
-    }
-  }
-
-  &--left {
-    position: relative;
-
-    .char-counter {
-      position: absolute;
-      bottom: 2.25rem;
-      right: 2rem;
-      font-size: 0.75rem;
-      color: $text-muted;
-    }
-  }
-
-  &--right {
-    gap: 0.75rem;
-  }
-}
-
-// ── Badges ────────────────────────────────────────────────────────────────────
-.badge {
-  font-size: 0.7rem;
-  font-weight: 600;
-  padding: 0.15rem 0.5rem;
-  border-radius: 0.3rem;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-
-  &--required {
-    background-color: rgba($badge-required, 0.15);
-    color: $badge-required;
-    border: 1px solid rgba($badge-required, 0.3);
-  }
-
-  &--best {
-    background-color: rgba($badge-best, 0.15);
-    color: $badge-best;
-    border: 1px solid rgba($badge-best, 0.3);
-  }
-}
-
-// ── Section Label ─────────────────────────────────────────────────────────────
-.section-label {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: $text-primary;
-  margin-bottom: 0.25rem;
-}
-
-// ── Dropzone ──────────────────────────────────────────────────────────────────
-.upload-section {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.dropzone {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.35rem;
-  padding: 1.5rem 1rem;
-  background-color: $bg-input;
-  border: 2px dashed $border-color;
-  border-radius: 0.6rem;
-  cursor: pointer;
-  transition:
-    border-color 0.2s,
-    background-color 0.2s;
-
-  &:hover {
-    border-color: $accent;
-    background-color: rgba($accent, 0.05);
-  }
-
-  &__icon {
-    color: $accent;
-    margin-bottom: 0.25rem;
-  }
-
-  &__title {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: $text-primary;
-    margin: 0;
-  }
-
-  &__subtitle {
-    font-size: 0.75rem;
-    color: $text-muted;
-    margin: 0;
-  }
-}
-
-// ── OR Divider ────────────────────────────────────────────────────────────────
-.or-divider {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  color: $text-muted;
-  font-size: 0.75rem;
-
-  &::before,
-  &::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background-color: $border-color;
-  }
-
-  span {
-    white-space: nowrap;
-  }
-}
-
-// ── Self Description ──────────────────────────────────────────────────────────
-.self-description {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-// ── Info Box ──────────────────────────────────────────────────────────────────
-.info-box {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.6rem;
-  padding: 0.75rem 1rem;
-  background-color: $info-bg;
-  border: 1px solid $info-border;
-  border-radius: 0.5rem;
-
-  &__icon {
-    flex-shrink: 0;
-    color: #4a90e2;
-    margin-top: 1px;
-  }
-
-  p {
-    margin: 0;
-    font-size: 0.8rem;
-    color: #8ab4f8;
-    line-height: 1.5;
-
-    strong {
-      color: $text-primary;
-    }
-  }
-}
-
-// ── Generate Button ───────────────────────────────────────────────────────────
-.generate-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, $accent 0%, color.adjust($accent, $lightness: -10%) 100%);
-  color: #fff;
-  font-size: 0.9rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition:
-    opacity 0.2s,
-    transform 0.1s;
-  font-family: $font-stack;
-
-  &:hover {
-    opacity: 0.9;
-  }
-
-  &:active {
-    transform: scale(0.98);
-  }
-}
-
-.recent-reports {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  width: 100%;
-  max-width: 900px;
-
-  .reports-list {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-
-    .report-item {
-      background-color: $bg-card;
-      border: 1px solid $border-color;
-      border-radius: 0.5rem;
-      padding: 1rem;
-      flex: 1;
+    .file-info {
       display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      cursor: pointer;
-      flex-shrink: 0;
+      align-items: center;
+      gap: 0.75rem;
 
-      .match-score {
-        font-size: 0.8rem;
-        font-weight: 600;
-        color: $accent;
-        align-items: flex-start;
+      .file-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: $radius-sm;
+        background: rgba(16, 185, 129, 0.15);
+        color: $color-success;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .file-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+
+        .file-name {
+          font-size: 0.875rem;
+          font-weight: 600;
+          color: $text-primary;
+          max-width: 200px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .file-meta {
+          font-size: 0.75rem;
+          color: $color-success;
+        }
+      }
+    }
+
+    .remove-file-btn {
+      background: transparent;
+      border: none;
+      color: $text-muted;
+      cursor: pointer;
+      padding: 0.35rem;
+      border-radius: $radius-xs;
+      display: flex;
+      align-items: center;
+      transition: all 0.15s ease;
+
+      &:hover {
+        color: $color-danger;
+        background: rgba(244, 63, 94, 0.12);
+      }
+    }
+  }
+
+  &__self-description {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    label {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: $text-secondary;
+    }
+
+    textarea {
+      width: 100%;
+      height: 85px;
+      background-color: $bg-input;
+      border: 1px solid $border-subtle;
+      border-radius: $radius-md;
+      padding: 0.75rem 1rem;
+      color: $text-primary;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      resize: none;
+      outline: none;
+      transition: all 0.2s ease;
+
+      &::placeholder {
+        color: $text-muted;
+      }
+
+      &:focus {
+        background-color: $bg-input-focus;
+        border-color: $accent-primary;
+      }
+    }
+  }
+
+  &__tip-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    padding: 0.75rem 1rem;
+    background-color: rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: $radius-md;
+    font-size: 0.8rem;
+    color: #bae6fd;
+    line-height: 1.45;
+
+    svg {
+      color: #38bdf8;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+  }
+
+  // Studio Footer
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2rem;
+    background: #0f1524;
+    border-top: 1px solid $border-subtle;
+    gap: 1.5rem;
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.825rem;
+      color: $text-muted;
+
+      svg {
+        color: color.adjust($accent-primary, $lightness: 15%);
       }
     }
   }
 }
 
-// ── Page Footer ───────────────────────────────────────────────────────────────
-.page-footer {
+// ── Recent Reports ────────────────────────────────────────────────────────────
+.recent-plans {
   display: flex;
+  flex-direction: column;
   gap: 1.5rem;
 
-  a {
-    font-size: 0.8rem;
-    color: $text-muted;
-    text-decoration: none;
-    transition: color 0.2s;
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-    &:hover {
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
       color: $text-primary;
     }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 1.25rem;
+  }
+
+  &__card {
+    background: $bg-card;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-lg;
+    padding: 1.35rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: $border-hover;
+      background: $bg-card-hover;
+      transform: translateY(-2px);
+      box-shadow: $shadow-md;
+    }
+
+    .card-top {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+
+      h3 {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: $text-primary;
+        line-height: 1.4;
+      }
+
+      .card-date {
+        font-size: 0.8rem;
+        color: $text-muted;
+      }
+    }
+
+    .card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid $border-subtle;
+      padding-top: 0.85rem;
+
+      .view-cta {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.825rem;
+        font-weight: 500;
+        color: color.adjust($accent-primary, $lightness: 15%);
+      }
+    }
+  }
+
+  &__empty {
+    padding: 3.5rem 2rem;
+    background: $bg-card;
+    border: 1px dashed $border-subtle;
+    border-radius: $radius-xl;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    .empty-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: rgba(99, 102, 241, 0.1);
+      color: color.adjust($accent-primary, $lightness: 15%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: $text-primary;
+    }
+
+    p {
+      color: $text-secondary;
+      font-size: 0.9rem;
+      max-width: 420px;
+    }
+  }
+}
+
+// ── Footer ────────────────────────────────────────────────────────────────────
+.home-footer {
+  border-top: 1px solid $border-subtle;
+  padding: 2rem 1.5rem;
+  margin-top: auto;
+
+  &__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.825rem;
+    color: $text-muted;
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+
+      a {
+        color: $text-muted;
+        transition: color 0.15s ease;
+
+        &:hover {
+          color: $text-primary;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $bp-tablet) {
+  .studio-card {
+    &__body {
+      flex-direction: column;
+    }
+
+    &__panel--right {
+      border-left: none;
+      border-top: 1px solid $border-subtle;
+    }
+
+    &__footer {
+      flex-direction: column;
+      align-items: stretch;
+
+      .btn {
+        width: 100%;
+      }
+    }
+  }
+
+  .home-hero h1 {
+    font-size: 1.85rem;
   }
 }

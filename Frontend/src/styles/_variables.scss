@@ -1,0 +1,84 @@
+// ── Skillens Design System Tokens ───────────────────────────────────────────
+
+// Canvas & Backgrounds
+$bg-canvas: #090d16;
+$bg-canvas-elevated: #0f1523;
+$bg-card: #131b2e;
+$bg-card-subtle: #172138;
+$bg-card-hover: #1c2742;
+$bg-input: #0e1626;
+$bg-input-focus: #111a2e;
+
+// Borders
+$border-subtle: rgba(255, 255, 255, 0.08);
+$border-medium: rgba(255, 255, 255, 0.14);
+$border-hover: rgba(99, 102, 241, 0.4);
+$border-active: #6366f1;
+
+// Text Colors
+$text-primary: #f8fafc;
+$text-secondary: #94a3b8;
+$text-muted: #64748b;
+$text-inverse: #090d16;
+
+// Brand & Accent Colors
+$accent-primary: #6366f1;       // Electric Indigo
+$accent-primary-hover: #4f46e5;
+$accent-secondary: #8b5cf6;     // Royal Violet
+$accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+$accent-gradient-hover: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+$accent-glow: rgba(99, 102, 241, 0.25);
+$accent-subtle: rgba(99, 102, 241, 0.12);
+
+// Semantic Status Colors
+$color-success: #10b981;
+$color-success-bg: rgba(16, 185, 129, 0.12);
+$color-success-border: rgba(16, 185, 129, 0.3);
+
+$color-warning: #f59e0b;
+$color-warning-bg: rgba(245, 158, 11, 0.12);
+$color-warning-border: rgba(245, 158, 11, 0.3);
+
+$color-danger: #f43f5e;
+$color-danger-bg: rgba(244, 63, 94, 0.12);
+$color-danger-border: rgba(244, 63, 94, 0.3);
+
+$color-info: #38bdf8;
+$color-info-bg: rgba(56, 189, 248, 0.12);
+$color-info-border: rgba(56, 189, 248, 0.3);
+
+// Severity Tokens
+$severity-high: #f43f5e;
+$severity-high-bg: rgba(244, 63, 94, 0.12);
+$severity-high-border: rgba(244, 63, 94, 0.3);
+
+$severity-medium: #f59e0b;
+$severity-medium-bg: rgba(245, 158, 11, 0.12);
+$severity-medium-border: rgba(245, 158, 11, 0.3);
+
+$severity-low: #10b981;
+$severity-low-bg: rgba(16, 185, 129, 0.12);
+$severity-low-border: rgba(16, 185, 129, 0.3);
+
+// Typography
+$font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-family-mono: 'JetBrains Mono', monospace;
+
+// Shadows & Radii
+$radius-xs: 4px;
+$radius-sm: 6px;
+$radius-md: 10px;
+$radius-lg: 14px;
+$radius-xl: 20px;
+$radius-full: 9999px;
+
+$shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+$shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.35);
+$shadow-lg: 0 16px 36px -6px rgba(0, 0, 0, 0.45);
+$shadow-glow: 0 0 24px -4px rgba(99, 102, 241, 0.35);
+
+// Breakpoints
+$bp-mobile: 480px;
+$bp-tablet: 768px;
+$bp-desktop: 1024px;
+$bp-wide: 1280px;

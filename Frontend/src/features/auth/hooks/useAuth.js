@@ -4,16 +4,25 @@ import { login, register, logout, getMe } from "../services/auth.api";
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
   const { user, setUser, loading, setLoading } = context;
 
   const handleLogin = async ({ email, password }) => {
     setLoading(true);
-
     try {
       const data = await login({ email, password });
-      setUser(data);
+      setUser(data.user || data);
+      return { success: true, data };
     } catch (err) {
-      console.log(err);
+      console.error("Login error:", err);
+      return {
+        success: false,
+        error:
+          err.response?.data?.message ||
+          "Invalid email or password. Please try again.",
+      };
     } finally {
       setLoading(false);
     }
@@ -22,10 +31,22 @@ export const useAuth = () => {
   const handelRegister = async ({ username, email, password }) => {
     setLoading(true);
     try {
-      const data = await register({ username, email, password });
-      setUser(data);
+      await register({ username, email, password });
+      try {
+        const data = await getMe();
+        setUser(data.user || data);
+      } catch {
+        setUser({ username, email });
+      }
+      return { success: true };
     } catch (err) {
-      console.log(err);
+      console.error("Register error:", err);
+      return {
+        success: false,
+        error:
+          err.response?.data?.message ||
+          "Registration failed. Please check your details.",
+      };
     } finally {
       setLoading(false);
     }
@@ -33,30 +54,45 @@ export const useAuth = () => {
 
   const handelLogout = async () => {
     setLoading(true);
-
     try {
-      const data = await logout();
+      await logout();
       setUser(null);
+      return { success: true };
     } catch (err) {
-      console.log(err);
+      console.error("Logout error:", err);
+      setUser(null);
+      return { success: false, error: err.message };
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
+    let isMounted = true;
     const getAndSetUser = async () => {
       try {
         const data = await getMe();
-        setUser(data);
-      } catch (err) {
+        if (isMounted) {
+          setUser(data.user || data);
+        }
+      } catch {
+        if (isMounted) {
+          setUser(null);
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
     getAndSetUser();
-  });
+
+    return () => {
+      isMounted = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return { user, loading, handleLogin, handelRegister, handelLogout };
 };

@@ -1,0 +1,334 @@
+@use "sass:color";
+@use "./variables" as *;
+@use "./animations" as *;
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background-color: $bg-canvas;
+  color: $text-primary;
+  font-family: $font-family-base;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  font-size: 15px;
+}
+
+// Custom Scrollbars
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $bg-canvas;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $bg-card-hover;
+  border-radius: $radius-full;
+  border: 2px solid $bg-canvas;
+
+  &:hover {
+    background: color.adjust($bg-card-hover, $lightness: 10%);
+  }
+}
+
+// Typography Defaults
+h1, h2, h3, h4, h5, h6 {
+  color: $text-primary;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+a {
+  color: $accent-primary;
+  text-decoration: none;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: color.adjust($accent-primary, $lightness: 10%);
+  }
+}
+
+button, input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+// Buttons
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: $radius-md;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  user-select: none;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &--primary {
+    background: $accent-gradient;
+    color: #ffffff;
+    box-shadow: 0 2px 10px rgba(99, 102, 241, 0.35);
+
+    &:hover {
+      background: $accent-gradient-hover;
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.5);
+      transform: translateY(-1px);
+    }
+  }
+
+  &--secondary {
+    background-color: $bg-card-subtle;
+    border-color: $border-subtle;
+    color: $text-primary;
+
+    &:hover {
+      background-color: $bg-card-hover;
+      border-color: $border-medium;
+      color: #ffffff;
+    }
+  }
+
+  &--outline {
+    background: transparent;
+    border-color: $border-medium;
+    color: $text-secondary;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.04);
+      color: $text-primary;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    border-color: transparent;
+    color: $text-secondary;
+    padding: 0.5rem 0.75rem;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: $text-primary;
+    }
+  }
+
+  &--danger {
+    background-color: $color-danger-bg;
+    border-color: $color-danger-border;
+    color: $color-danger;
+
+    &:hover {
+      background-color: rgba(244, 63, 94, 0.2);
+    }
+  }
+
+  &--sm {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+    border-radius: $radius-sm;
+  }
+
+  &--lg {
+    padding: 0.85rem 1.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: $radius-lg;
+  }
+}
+
+// Badges
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: $radius-full;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+
+  &--primary {
+    background-color: $accent-subtle;
+    color: color.adjust($accent-primary, $lightness: 15%);
+    border-color: rgba($accent-primary, 0.25);
+  }
+
+  &--success {
+    background-color: $color-success-bg;
+    color: $color-success;
+    border-color: $color-success-border;
+  }
+
+  &--warning {
+    background-color: $color-warning-bg;
+    color: $color-warning;
+    border-color: $color-warning-border;
+  }
+
+  &--danger {
+    background-color: $color-danger-bg;
+    color: $color-danger;
+    border-color: $color-danger-border;
+  }
+
+  &--neutral {
+    background-color: rgba(255, 255, 255, 0.06);
+    color: $text-secondary;
+    border-color: $border-subtle;
+  }
+}
+
+// Alert Banners
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.85rem 1.1rem;
+  border-radius: $radius-md;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  animation: slideDown 0.25s ease-out;
+
+  &--danger {
+    background-color: rgba(244, 63, 94, 0.1);
+    border: 1px solid rgba(244, 63, 94, 0.3);
+    color: #fecdd3;
+
+    svg {
+      color: $color-danger;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+  }
+
+  &--success {
+    background-color: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #a7f3d0;
+
+    svg {
+      color: $color-success;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+  }
+
+  &--info {
+    background-color: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    color: #bae6fd;
+
+    svg {
+      color: $color-info;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+  }
+}
+
+// Input Fields
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+
+  label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: $text-secondary;
+  }
+
+  .input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .input-icon {
+      position: absolute;
+      left: 1rem;
+      color: $text-muted;
+      display: flex;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    .input-action-btn {
+      position: absolute;
+      right: 0.75rem;
+      background: none;
+      border: none;
+      color: $text-muted;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 0.25rem;
+      border-radius: $radius-xs;
+
+      &:hover {
+        color: $text-primary;
+      }
+    }
+
+    input, textarea {
+      width: 100%;
+      background-color: $bg-input;
+      border: 1px solid $border-subtle;
+      border-radius: $radius-md;
+      color: $text-primary;
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+      outline: none;
+      transition: all 0.2s ease;
+
+      &.has-icon {
+        padding-left: 2.75rem;
+      }
+
+      &.has-action {
+        padding-right: 2.75rem;
+      }
+
+      &::placeholder {
+        color: $text-muted;
+      }
+
+      &:hover {
+        border-color: $border-medium;
+      }
+
+      &:focus {
+        background-color: $bg-input-focus;
+        border-color: $accent-primary;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
+      }
+    }
+  }
+}

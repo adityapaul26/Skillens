@@ -1,0 +1,171 @@
+@use "sass:color";
+@use "./variables" as *;
+
+.skillens-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  background-color: rgba(9, 13, 22, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid $border-subtle;
+  transition: all 0.2s ease;
+
+  &__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0.85rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+    cursor: pointer;
+
+    .brand-icon-wrapper {
+      width: 36px;
+      height: 36px;
+      border-radius: $radius-md;
+      background: $accent-gradient;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      box-shadow: 0 0 16px rgba(99, 102, 241, 0.4);
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+
+      .brand-badge {
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 0.15rem 0.45rem;
+        background: rgba(99, 102, 241, 0.18);
+        border: 1px solid rgba(99, 102, 241, 0.35);
+        color: color.adjust($accent-primary, $lightness: 20%);
+        border-radius: $radius-full;
+      }
+    }
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $text-secondary;
+    padding: 0.4rem 0.75rem;
+    border-radius: $radius-sm;
+    transition: all 0.15s ease;
+
+    &:hover, &--active {
+      color: $text-primary;
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+  }
+
+  &__user-menu {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__profile {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.3rem 0.6rem;
+    background-color: $bg-card-subtle;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-full;
+
+    .profile-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+    }
+
+    .profile-name {
+      font-size: 0.825rem;
+      font-weight: 500;
+      color: $text-primary;
+      max-width: 140px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  &__logout-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: transparent;
+    border: 1px solid $border-subtle;
+    color: $text-muted;
+    padding: 0.4rem 0.8rem;
+    border-radius: $radius-md;
+    font-size: 0.825rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+
+    &:hover {
+      background-color: rgba(244, 63, 94, 0.1);
+      border-color: rgba(244, 63, 94, 0.3);
+      color: $color-danger;
+    }
+  }
+}
+
+@media (max-width: $bp-tablet) {
+  .skillens-navbar {
+    &__inner {
+      padding: 0.75rem 1rem;
+    }
+
+    .brand-title {
+      font-size: 1.1rem;
+    }
+
+    &__profile .profile-name {
+      display: none;
+    }
+
+    .logout-label {
+      display: none;
+    }
+  }
+}

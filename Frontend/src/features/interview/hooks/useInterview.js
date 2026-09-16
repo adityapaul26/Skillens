@@ -73,9 +73,8 @@ export const useInterview = () => {
 
   const getResumePdf = async (interviewReportId) => {
     setLoading(true);
-    let response = null;
     try {
-      response = await generateResumePdf({ interviewReportId });
+      const response = await generateResumePdf({ interviewReportId });
       const url = window.URL.createObjectURL(
         new Blob([response], { type: "application/pdf" }),
       );
@@ -97,6 +96,7 @@ export const useInterview = () => {
     } else {
       getReports();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [interviewId]);
 
   return {
