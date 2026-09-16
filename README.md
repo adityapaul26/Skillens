@@ -47,7 +47,7 @@ flowchart TD
 
     subgraph Data ["External & Storage"]
         Mongo[("MongoDB Atlas")]
-        Gemini["Google Gemini API\n(gemini-3.8-flash)"]
+        Gemini["Google Gemini API\n(gemini-3.1-flash-lite)"]
     end
 
     Service -->|HTTP Requests + Cookies| Router
@@ -77,7 +77,7 @@ flowchart TD
 |---|---|
 | **Node.js & Express 5** | High-performance asynchronous REST API server |
 | **MongoDB & Mongoose 9** | NoSQL database modeling users, reports, and token blacklists |
-| **@google/genai** | Official Google GenAI SDK for Gemini models (`gemini-3.8-flash`) |
+| **@google/genai** | Official Google GenAI SDK for Gemini models (`gemini-3.1-flash-lite`) |
 | **Puppeteer** | Headless Chrome browser for compiling ATS HTML resumes to PDF |
 | **PDF-Parse** | High-speed text extraction from candidate resume PDFs |
 | **Multer** | Multipart form-data handling for file uploads |
@@ -139,6 +139,10 @@ Skillens/
    ```bash
    npm install
    ```
+   > **Note (Puppeteer Chrome)**: Puppeteer uses headless Chrome to generate PDFs. If Chrome was not downloaded during installation, install it by running:
+   > ```bash
+   > npx puppeteer browsers install chrome
+   > ```
 
 3. Configure environment variables:
    Create a `.env` file in the `Backend` directory:
@@ -224,8 +228,17 @@ Skillens/
 
 ## 🛠️ Troubleshooting
 
+* **Puppeteer: Could not find Chrome (`Error: Could not find Chrome`)**:
+  Puppeteer requires a matching headless Chrome/Chromium browser binary to compile ATS resume HTML into PDF. If you see this error:
+  ```bash
+  cd Backend
+  npx puppeteer browsers install chrome
+  ```
+  On Linux, also ensure standard shared libraries required by headless Chrome (such as `libnss3`, `libatk-bridge2.0-0`, `libx11-xcb1`, `libdrm2`, `libgbm1`) are installed on your distribution.
+
 * **Gemini 429 (Rate Limit Exceeded)**:
   If you encounter `RateLimitError: 429 Quota exceeded for metric: generate_content_free_tier_requests`, wait 10 seconds before triggering another generation or review your quota tier in [Google AI Studio](https://ai.dev/rate-limit).
+
 * **Resume Parsing Issues**:
   Ensure your uploaded PDF contains selectable text (not a scanned raster image) so `pdf-parse` can extract the textual content accurately.
 
