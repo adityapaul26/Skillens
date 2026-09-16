@@ -173,7 +173,7 @@ Generate the response according to the provided schema.
 `;
 
   const interaction = await ai.interactions.create({
-    model: "gemini-3.8-flash",
+    model: "gemini-3.1-flash-lite",
     input: prompt,
     response_format: {
       type: "text",
@@ -190,10 +190,14 @@ Generate the response according to the provided schema.
 
 async function generatePdfFromHtml(htmlContent) {
   const browser = await puppeteer.launch({
-    args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"],
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-dev-shm-usage",
+    ],
   });
   const page = await browser.newPage();
-  await page.setContent(htmlContent, { waitUntil: "networkidle0" });
+  await page.setContent(htmlContent, { waitUntil: "networkidle2" });
 
   const pdfBuffer = await page.pdf({
     format: "A4",
@@ -248,7 +252,7 @@ Requirements:
 - The HTML should be self-contained and ready to be converted directly into a PDF using Puppeteer.`;
 
   const interaction = await ai.interactions.create({
-    model: "gemini-3.8-flash",
+    model: "gemini-3.1-flash-lite",
     input: prompt,
     response_format: {
       type: "text",
